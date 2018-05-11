@@ -1,0 +1,11 @@
+[package]
+name = "byteripper"
+version = "0.1.0"
+authors = ["Frank Denis <github@pureftpd.org>"]
+
+[dependencies]
+clap = "*"
+failure = "*"
+goblin = "*"
+libloading = "*"
+xfailure = "*"
