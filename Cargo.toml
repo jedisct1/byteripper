@@ -4,8 +4,8 @@ version = "0.1.0"
 authors = ["Frank Denis <github@pureftpd.org>"]
 
 [dependencies]
-clap = "*"
-failure = "*"
-goblin = "*"
-libloading = "*"
-xfailure = "*"
+clap = "2.33.3"
+failure = "0.1.8"
+goblin = "0.3.4"
+libloading = "0.7.0"
+xfailure = "0.1.0"
