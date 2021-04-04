@@ -1,4 +1,4 @@
-use errors::*;
+use crate::errors::*;
 use goblin::elf::Elf;
 use goblin::mach::{self, Mach, MachO};
 use goblin::Object;
@@ -34,7 +34,8 @@ impl ExtractedSymbols {
     }
 
     pub fn dump<P: AsRef<Path>>(&self, output_dir: P) -> Result<(), BRError> {
-        let bytes = self.bytes
+        let bytes = self
+            .bytes
             .as_ref()
             .ok_or(BRError::InternalError("Library code not set"))?;
         fs::create_dir_all(&output_dir)?;
@@ -52,20 +53,22 @@ impl ExtractedSymbols {
     }
 }
 
-fn parse_elf(elf: Elf) -> Result<ExtractedSymbols, BRError> {
+fn parse_elf(elf: Elf<'_>) -> Result<ExtractedSymbols, BRError> {
     let mut symbols = vec![];
 
-    for symbol in elf.dynsyms
+    for symbol in elf
+        .dynsyms
         .iter()
         .filter(|symbol| symbol.st_info == 0x12 || symbol.st_info == 0x22)
     {
-        let name = elf.dynstrtab
+        let name = elf
+            .dynstrtab
             .get(symbol.st_name)
             .ok_or(BRError::ParseError)?
             .map_err(|_| BRError::ParseError)?
             .to_string();
         let extracted_symbol = ExtractedSymbol {
-            name: name,
+            name,
             offset: symbol.st_value as usize,
             size: match symbol.st_size {
                 size if size > 0 => Some(size as usize),
@@ -81,7 +84,7 @@ fn parse_elf(elf: Elf) -> Result<ExtractedSymbols, BRError> {
 // from the text section, and for each symbol, find the one with the smallest
 // offset immediately after the reference symbol, in order to guess the reference
 // symbol's size (alignment included).
-fn parse_macho(macho: MachO) -> Result<ExtractedSymbols, BRError> {
+fn parse_macho(macho: MachO<'_>) -> Result<ExtractedSymbols, BRError> {
     let mut symbols = vec![];
 
     // Start by finding the boundaries of the text section
@@ -119,8 +122,7 @@ fn parse_macho(macho: MachO) -> Result<ExtractedSymbols, BRError> {
                     n_value,
                     ..
                 },
-            )) if name.len() > 1 && name.starts_with('_') =>
-            {
+            )) if name.len() > 1 && name.starts_with('_') => {
                 let extracted_symbol = ExtractedSymbol {
                     name: name[1..].to_string(),
                     offset: n_value as usize,

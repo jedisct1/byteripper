@@ -1,17 +1,14 @@
-extern crate clap;
 #[macro_use]
 extern crate failure;
 #[macro_use]
 extern crate xfailure;
-extern crate goblin;
-extern crate libloading;
 
 mod config;
 mod errors;
 mod symbols;
 
-use config::*;
-use errors::*;
+use crate::config::*;
+use crate::errors::*;
 
 fn main() -> Result<(), BRError> {
     let config = Config::parse_cmdline()?;

@@ -1,5 +1,5 @@
+use crate::errors::*;
 use clap::{App, Arg};
-use errors::*;
 use std::path::PathBuf;
 
 #[derive(Default, Clone, Debug)]
@@ -30,12 +30,16 @@ impl Config {
                     .help("Path to the output directory"),
             )
             .get_matches();
-        let input_path = PathBuf::from(matches
-            .value_of("input_file")
-            .ok_or(BRError::UsageError("Input file required"))?);
-        let output_dir = PathBuf::from(matches
-            .value_of("output_dir")
-            .ok_or(BRError::UsageError("Output directory required"))?);
+        let input_path = PathBuf::from(
+            matches
+                .value_of("input_file")
+                .ok_or(BRError::UsageError("Input file required"))?,
+        );
+        let output_dir = PathBuf::from(
+            matches
+                .value_of("output_dir")
+                .ok_or(BRError::UsageError("Output directory required"))?,
+        );
         let config = Config {
             input_path,
             output_dir,
