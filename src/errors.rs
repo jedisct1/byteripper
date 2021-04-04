@@ -1,21 +1,15 @@
+pub use anyhow::Error;
 use std::io;
-
-#[derive(Debug, Fail)]
+#[derive(Debug, thiserror::Error)]
 pub enum BRError {
-    #[fail(display = "Internal error: {}", _0)]
+    #[error("Internal error: {0}")]
     InternalError(&'static str),
-    #[fail(display = "Incorrect usage: {}", _0)]
+    #[error("Incorrect usage: {0}")]
     UsageError(&'static str),
-    #[fail(display = "{}", _0)]
-    Io(#[cause] io::Error),
-    #[fail(display = "Parse error")]
+    #[error("{}", _0)]
+    Io(#[from] io::Error),
+    #[error("Parse error")]
     ParseError,
-    #[fail(display = "Unsupported")]
+    #[error("Unsupported")]
     Unsupported,
-}
-
-impl From<io::Error> for BRError {
-    fn from(e: io::Error) -> BRError {
-        BRError::Io(e)
-    }
 }

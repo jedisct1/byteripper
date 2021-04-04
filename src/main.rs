@@ -1,8 +1,3 @@
-#[macro_use]
-extern crate failure;
-#[macro_use]
-extern crate xfailure;
-
 mod config;
 mod errors;
 mod symbols;

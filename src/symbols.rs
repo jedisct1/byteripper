@@ -180,7 +180,7 @@ pub fn exported_symbols<P: AsRef<Path>>(path: P) -> Result<ExtractedSymbols, BRE
     let mut symbols = match Object::parse(&buffer).map_err(|_| BRError::ParseError)? {
         Object::Mach(Mach::Binary(macho)) => parse_macho(macho),
         Object::Elf(elf) => parse_elf(elf),
-        _ => xbail!(BRError::Unsupported),
+        _ => return Err(BRError::Unsupported),
     }?;
     symbols.set_bytes(buffer);
     Ok(symbols)

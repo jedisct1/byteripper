@@ -11,7 +11,7 @@ repository = "https://github.com/jedisct1/byteripper"
 
 [dependencies]
 clap = "2.33.3"
-failure = "0.1.8"
+anyhow = "1"
 goblin = "0.3.4"
 libloading = "0.7.0"
-xfailure = "0.1.0"
+thiserror = "1"
