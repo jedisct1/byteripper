@@ -7,6 +7,6 @@ edition = "2018"
 [dependencies]
 clap = "2.33.3"
 failure = "0.1.8"
-goblin = "0.3.4"
+goblin = "0.4.2"
 libloading = "0.7.0"
 xfailure = "0.1.0"
