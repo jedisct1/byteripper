@@ -63,9 +63,8 @@ fn parse_elf(elf: Elf<'_>) -> Result<ExtractedSymbols, BRError> {
     {
         let name = elf
             .dynstrtab
-            .get(symbol.st_name)
+            .get_at(symbol.st_name)
             .ok_or(BRError::ParseError)?
-            .map_err(|_| BRError::ParseError)?
             .to_string();
         let extracted_symbol = ExtractedSymbol {
             name,
