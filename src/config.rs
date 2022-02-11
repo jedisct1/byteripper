@@ -14,16 +14,16 @@ impl Config {
             .version("1.0")
             .about("A tool to extract code from individual functions in a library")
             .arg(
-                Arg::with_name("input_file")
-                    .short("i")
+                Arg::new("input_file")
+                    .short('i')
                     .long("input")
                     .takes_value(true)
                     .required(true)
                     .help("Path to the input file"),
             )
             .arg(
-                Arg::with_name("output_dir")
-                    .short("o")
+                Arg::new("output_dir")
+                    .short('o')
                     .long("output-dir")
                     .takes_value(true)
                     .required(true)

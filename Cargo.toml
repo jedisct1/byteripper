@@ -10,7 +10,11 @@ homepage = "https://github.com/jedisct1/byteripper"
 repository = "https://github.com/jedisct1/byteripper"
 
 [dependencies]
-clap = "2.33.3"
+clap = { version = "3.0.14", default-features = false, features = [
+    "std",
+    "cargo",
+    "wrap_help",
+] }
 anyhow = "1"
 goblin = "0.4.3"
 libloading = "0.7.0"
