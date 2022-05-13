@@ -1,10 +1,12 @@
-use crate::errors::*;
-use goblin::elf::Elf;
-use goblin::mach::{self, Mach, MachO};
-use goblin::Object;
 use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+
+use goblin::elf::Elf;
+use goblin::mach::{self, Mach, MachO};
+use goblin::Object;
+
+use crate::errors::*;
 
 #[derive(Clone, Debug, Default)]
 pub struct ExtractedSymbol {
@@ -81,8 +83,8 @@ fn parse_elf(elf: Elf<'_>) -> Result<ExtractedSymbols, BRError> {
 
 // Mach-O symbols don't include any sizes, so we need to extract all the symbols
 // from the text section, and for each symbol, find the one with the smallest
-// offset immediately after the reference symbol, in order to guess the reference
-// symbol's size (alignment included).
+// offset immediately after the reference symbol, in order to guess the
+// reference symbol's size (alignment included).
 fn parse_macho(macho: MachO<'_>) -> Result<ExtractedSymbols, BRError> {
     let mut symbols = vec![];
 
