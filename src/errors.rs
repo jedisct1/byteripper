@@ -1,6 +1,5 @@
 use std::io;
 
-pub use anyhow::Error;
 #[derive(Debug, thiserror::Error)]
 pub enum BRError {
     #[error("Internal error: {0}")]
