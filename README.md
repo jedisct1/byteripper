@@ -2,7 +2,7 @@
 
 A tool to extract code from individual functions in a library.
 
-Support ELF32, ELF64 and Mach-O libraries.
+Support ELF32, ELF64 and Mach-O shared libraries.
 
 ## Usage
 
