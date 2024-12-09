@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use clap::{App, Arg};
+use clap::Arg;
 
 use crate::errors::*;
 
@@ -12,9 +12,7 @@ pub struct Config {
 
 impl Config {
     pub fn parse_cmdline() -> Result<Self, BRError> {
-        let matches = App::new("byteripper")
-            .version("1.0")
-            .about("A tool to extract code from individual functions in a library")
+        let matches = clap::command!()
             .arg(
                 Arg::new("input_file")
                     .short('i')
