@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use clap::{App, Arg};
+use clap::{Arg, Command};
 
 use crate::errors::*;
 
@@ -12,14 +12,13 @@ pub struct Config {
 
 impl Config {
     pub fn parse_cmdline() -> Result<Self, BRError> {
-        let matches = App::new("byteripper")
+        let matches = Command::new("byteripper")
             .version("1.0")
             .about("A tool to extract code from individual functions in a library")
             .arg(
                 Arg::new("input_file")
                     .short('i')
                     .long("input")
-                    .takes_value(true)
                     .required(true)
                     .help("Path to the input file"),
             )
@@ -27,19 +26,18 @@ impl Config {
                 Arg::new("output_dir")
                     .short('o')
                     .long("output-dir")
-                    .takes_value(true)
                     .required(true)
                     .help("Path to the output directory"),
             )
             .get_matches();
         let input_path = PathBuf::from(
             matches
-                .value_of("input_file")
+                .get_one::<String>("input_file")
                 .ok_or(BRError::UsageError("Input file required"))?,
         );
         let output_dir = PathBuf::from(
             matches
-                .value_of("output_dir")
+                .get_one::<String>("output_dir")
                 .ok_or(BRError::UsageError("Output directory required"))?,
         );
         let config = Config {
