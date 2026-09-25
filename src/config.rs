@@ -17,7 +17,6 @@ impl Config {
                 Arg::new("input_file")
                     .short('i')
                     .long("input")
-                    .takes_value(true)
                     .required(true)
                     .help("Path to the input file"),
             )
@@ -25,19 +24,18 @@ impl Config {
                 Arg::new("output_dir")
                     .short('o')
                     .long("output-dir")
-                    .takes_value(true)
                     .required(true)
                     .help("Path to the output directory"),
             )
             .get_matches();
         let input_path = PathBuf::from(
             matches
-                .value_of("input_file")
+                .get_one::<String>("input_file")
                 .ok_or(BRError::UsageError("Input file required"))?,
         );
         let output_dir = PathBuf::from(
             matches
-                .value_of("output_dir")
+                .get_one::<String>("output_dir")
                 .ok_or(BRError::UsageError("Output directory required"))?,
         );
         let config = Config {

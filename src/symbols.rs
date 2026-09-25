@@ -47,8 +47,16 @@ impl ExtractedSymbols {
             path.push(&symbol.name);
             path.set_extension("bin");
             if let Some(size) = symbol.size {
+                let end = symbol.offset.saturating_add(size);
+                if end > bytes.len() || symbol.offset >= bytes.len() {
+                    eprintln!(
+                        "Warning: {} has invalid bounds (offset {}, size {}), skipping",
+                        symbol.name, symbol.offset, size
+                    );
+                    continue;
+                }
                 println!("{} (offset {}, {} bytes)", symbol.name, symbol.offset, size);
-                File::create(path)?.write_all(&bytes[symbol.offset..symbol.offset + size])?;
+                File::create(path)?.write_all(&bytes[symbol.offset..end])?;
             }
         }
         Ok(())
