@@ -1,9 +1,10 @@
 [package]
+keywords = ["elf", "mach-o", "binary", "symbols", "extraction"]
 name = "byteripper"
 version = "0.1.3"
 authors = ["Frank Denis <github@pureftpd.org>"]
 edition = "2018"
-description = "A tool to extract the binary code from every function in a shared library"
+description = "Extract binary machine code for functions and symbols from ELF and Mach-O shared libraries with a command-line tool."
 readme = "README.md"
 license = "MIT"
 homepage = "https://github.com/jedisct1/byteripper"
